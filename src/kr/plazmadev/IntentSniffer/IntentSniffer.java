@@ -147,8 +147,7 @@ public class IntentSniffer extends Activity {
 		try {
 			initControls();
 		} catch (Throwable e) {
-			Toast.makeText(this, "error: " + e.getMessage(), Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(this, "error: " + e.getMessage(), Toast.LENGTH_LONG).show();
 			// mTextView.append(e.getMessage() );
 		}
 	}
@@ -265,7 +264,6 @@ public class IntentSniffer extends Activity {
 				loaded.add(line);
 				line = r.readLine();
 			}
-
 		} catch (IOException ioe) {
 			Log.w(TAG, "failed to read stored actions");
 			Toast.makeText(this, "Please update saved actions / categories.",
@@ -371,14 +369,15 @@ public class IntentSniffer extends Activity {
 		Set<String> l = new HashSet<String>();
 		List<Class> classes = new ArrayList<Class>();
 
-		for (String cur : actionHarboringClasses)
+		for (String cur : actionHarboringClasses){
 			try {
 				classes.add(Class.forName(cur));
 			} catch (ClassNotFoundException cne) {
 				Log.e(TAG, "missing class " + cne.getMessage());
 			}
-
-		for (Class c : classes)
+		}
+		
+		for (Class c : classes){
 			for (Field f : c.getFields()) {
 				// actions constants tend to start or end with ACTION
 				if ((f.getName().startsWith("ACTION") || f.getName().endsWith(
@@ -393,6 +392,8 @@ public class IntentSniffer extends Activity {
 					}
 				}
 			}
+		}
+		
 		this.mNumReflected = l.size();
 		findMoreActions(l);
 		mKnownBroadcastActions = l.toArray(new String[l.size()]);
